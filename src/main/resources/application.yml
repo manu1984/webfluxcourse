@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${DB_USER:manubrms}${DB_PASSWORD}@webfluxcoursecluster.chufujs.mongodb.net/${DB_NAME:webflux-course}?retryWrites=true&w=majority
+  application:
+    name: webflux-course

@@ -4,9 +4,12 @@ import br.com.valdircezar.webfluxcourse.entity.User;
 import br.com.valdircezar.webfluxcourse.mapper.UserMapper;
 import br.com.valdircezar.webfluxcourse.model.request.UserRequest;
 import br.com.valdircezar.webfluxcourse.repository.UserReposirory;
+import br.com.valdircezar.webfluxcourse.service.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,9 @@ public class UserService {
     }
 
     public Mono<User> findById(final String id){
-        return reposirory.findById(id);
+        return reposirory.findById(id)
+                .switchIfEmpty(Mono.error(new ObjectNotFoundException(
+                        format("Object not found. Id: %s Type: %s", id, User.class.getSimpleName())
+                )));
     }
 }

@@ -1,0 +1,2 @@
+mongodb+srv://manubrms:<password>@webfluxcoursecluster.chufujs.mongodb.net/
+uri: mongodb+srv://${DB_USER:manubrms}${DB_PASSWORD:admin}@webfluxcoursecluster.chufujs.mongodb.net/${DB_NAME:webflux-course}?retryWrites=true&w=majority

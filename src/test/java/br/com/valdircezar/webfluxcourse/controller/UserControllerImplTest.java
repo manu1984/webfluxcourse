@@ -3,6 +3,7 @@ package br.com.valdircezar.webfluxcourse.controller;
 import br.com.valdircezar.webfluxcourse.entity.User;
 import br.com.valdircezar.webfluxcourse.mapper.UserMapper;
 import br.com.valdircezar.webfluxcourse.model.request.UserRequest;
+import br.com.valdircezar.webfluxcourse.model.response.UserResponse;
 import br.com.valdircezar.webfluxcourse.service.UserService;
 import com.mongodb.reactivestreams.client.MongoClient;
 import org.junit.jupiter.api.DisplayName;
@@ -78,7 +79,23 @@ class UserControllerImplTest {
     }
 
     @Test
-    void findById() {
+    @DisplayName("Test find by id endpoint with success")
+    void testFindByIdWithSucess() {
+        final var id = "123456";
+        final var userResponse = new UserResponse(id, "valdir", "valdir@gmail.com", "123");
+
+        when(service.findById(anyString())).thenReturn(Mono.just(User.builder().build()));
+        when(mapper.toResponse(any(User.class))).thenReturn(userResponse);
+
+        webTestClient.get().uri("/users/" + id)
+                .accept(APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(id)
+                .jsonPath("$.name").isEqualTo("valdir")
+                .jsonPath("$.email").isEqualTo("valdir@gmail.com")
+                .jsonPath("$.password").isEqualTo("123");
     }
 
     @Test

@@ -22,7 +22,7 @@ public class UserControllerImpl implements UserController {
     private final UserMapper mapper;
 
     @Override
-    public ResponseEntity<Mono<Void>> save( UserRequest request) {
+    public ResponseEntity<Mono<Void>> save(final UserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request).then());
     }
 
